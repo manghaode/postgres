@@ -45,3 +45,4 @@ lib*.pc
 /portlock/
 compile_commands.json
 .cache
+.vscode/launch.json
