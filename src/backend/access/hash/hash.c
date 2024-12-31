@@ -132,6 +132,16 @@ hashbuild(Relation heap, Relation index, IndexInfo *indexInfo)
 			 RelationGetRelationName(index));
 
 	/* Estimate the number of rows currently present in the table */
+  /* mmy: 
+   *      heap means the heap relation, which is the table we want to build the index on.
+   *      relpages means the number of pages in the heap relation.
+   *      reltuples means the number of tuples in the heap relation. 
+   *      allvisfrac means the fraction of pages that are visible to all backends.
+   *      
+   *      We use the estimate_rel_size function to estimate the number of pages and tuples in the heap relation.
+   *      
+   *      The tuple like the record in mysql.
+   */
 	estimate_rel_size(heap, NULL, &relpages, &reltuples, &allvisfrac);
 
 	/* Initialize the hash index metadata page and initial buckets */
@@ -171,6 +181,12 @@ hashbuild(Relation heap, Relation index, IndexInfo *indexInfo)
 	buildstate.heapRel = heap;
 
 	/* do the heap scan */
+  /// mmy: 
+  //      heap means the heap relation, which is the table we want to build the index on.
+  //      index means the index relation, which is the hash index we want to build.
+  //      indexInfo means the index information, which contains the columns and operators to build the index.
+  //      hashbuildCallback means the callback function to process each tuple in the heap relation.
+  //      &buildstate means the working state for hashbuild.
 	reltuples = table_index_build_scan(heap, index, indexInfo, true, true,
 									   hashbuildCallback,
 									   &buildstate, NULL);
@@ -207,6 +223,7 @@ hashbuildempty(Relation index)
 /*
  * Per-tuple callback for table_index_build_scan
  */
+/// tid是heap tuple的位置，values是heap tuple的列值，isnull是heap tuple的列是否为null，tupleIsAlive是heap tuple是否有效。
 static void
 hashbuildCallback(Relation index,
 				  ItemPointer tid,

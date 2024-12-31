@@ -105,6 +105,7 @@ _h_spooldestroy(HSpool *hspool)
 /*
  * spool an index entry into the sort file.
  */
+/// 在spool中插入一个索引项， 并排序
 void
 _h_spool(HSpool *hspool, ItemPointer self, const Datum *values, const bool *isnull)
 {

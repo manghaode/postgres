@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 cd ../debug
 ./bin/pg_ctl -D ./data/ -l ./data/logfile stop
 rm -rf ./data/

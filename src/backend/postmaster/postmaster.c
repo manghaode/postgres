@@ -466,6 +466,10 @@ HANDLE		PostmasterHandle;
 /*
  * Postmaster main entry point
  */
+/*
+ * PostmasterMain 函数是系统的主控制函数，负责初始化和管理后台进程。
+ * 它处理命令行参数并启动 Postmaster 处理逻辑。
+ */
 void
 PostmasterMain(int argc, char *argv[])
 {
